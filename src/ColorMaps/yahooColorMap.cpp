@@ -1,3 +1,12 @@
+/********************************************************
+ *							*
+ *	Created by : Senaka Buthpitiya			*
+ *	Created on : 02/01/2015				*
+ *							*
+ ********************************************************/
+
+
+
 #include "../../include/ColorMaps/yahooColorMap.hpp"
 
 Scalar

@@ -1,3 +1,13 @@
+/********************************************************
+ *							*
+ *	Created by : Senaka Buthpitiya			*
+ *	Created on : 02/01/2015				*
+ *							*
+ ********************************************************/
+
+
+
+
 #include <opencv2/opencv.hpp>
 
 #include "./fractal.hpp"
