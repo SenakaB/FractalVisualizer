@@ -1,17 +1,18 @@
 /********************************************************
  *							*
  *	Created by : Senaka Buthpitiya			*
- *	Created on : 02/01/2015				*
+ *	Created on : 02/07/2015				*
  *							*
  ********************************************************/
 
-#ifndef __DEFINITIONS_HPP__INCLUDED__
-#define __DEFINITIONS_HPP__INCLUDED__
+#ifndef __PLOTRANGE_HPP__INCLUDED__
+#define __PLOTRANGE_HPP__INCLUDED__
 
-#define PI			3.14159265358979323846264338327950288
-
-
-
+struct PlotRange
+{
+	double xStart, xEnd;
+	double yStart, yEnd;
+};
 
 #endif
 

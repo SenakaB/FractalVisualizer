@@ -15,12 +15,13 @@
 #include "../include/plot.hpp"
 
 #include "../include/fractal.hpp"
-#include "../include/Fractals/Mandlebrot.hpp"
+#include "../include/Fractals/MandlebrotSet.hpp"
+#include "../include/Fractals/SierpinskiCarpet.hpp"
 
 #include "../include/colorMap.hpp"
 #include "../include/ColorMaps/grayscaleLinear.hpp"
 #include "../include/ColorMaps/grayscaleLogarithmic.hpp"
-#include "../include/ColorMaps/yahooColorMap.hpp"
+#include "../include/ColorMaps/YahooColorMap.hpp"
 
 
 using namespace std;
@@ -41,19 +42,35 @@ using namespace cv;
 
 
 
-void FracVizMouseClickCallbackFunc ( int event, int x, int y, int flags, void* userdata )
+void FracVizMouseClickCallbackFunc ( int event, int x, int y, int flags, void* p_userdata )
 {
 	if  ( event == EVENT_LBUTTONDOWN )
 	{
-		cout << "Left button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+		Plot* p_plot = ( Plot* ) p_userdata;
+		double plotX = ( p_plot->m_range.xEnd - p_plot->m_range.xStart ) * ( ( double ) x ) / SCR_W + p_plot->m_range.xStart;
+		double plotY = ( p_plot->m_range.yEnd - p_plot->m_range.yStart ) * ( ( double ) y ) / SCR_H + p_plot->m_range.yStart;
+
+		p_plot->ZoomIn( plotY, plotX, 16.0 );
+		Mat frame = p_plot->GenerateFrame( FRAME_H, FRAME_W );
+		imshow( "FracViz", frame );
 	}
 	else if  ( event == EVENT_RBUTTONDOWN )
-	{
-		cout << "Right button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+	{	
+		Plot* p_plot = ( Plot* ) p_userdata;
+		p_plot->ZoomOut( 16.0 );
+		Mat frame = p_plot->GenerateFrame( FRAME_H, FRAME_W );
+		imshow( "FracViz", frame );
 	}
 	else if  ( event == EVENT_MBUTTONDOWN )
 	{
-		cout << "Middle button of the mouse is clicked - position (" << x << ", " << y << ")" << endl;
+		Plot* p_plot = ( Plot* ) p_userdata;
+		Mat frame = p_plot->GenerateFrame( FRAME_H, FRAME_W );
+		time_t  timev;
+		time( &timev );
+		stringstream ss;
+		ss << "./output/" << timev << ".jpg";
+		imwrite( ss.str(), frame );
+		cout << "Image saved as " << ss.str() << "." << endl;
 	}
 	else if ( event == EVENT_MOUSEMOVE )
 	{
@@ -68,19 +85,19 @@ void FracVizMouseClickCallbackFunc ( int event, int x, int y, int flags, void* u
 
 int main ( int argc, char** argv )
 {
-	Fractal* p_fractal = ( Fractal* ) new MandlebrotSet( 256 ); //1024 );
+	//Fractal* p_fractal = ( Fractal* ) new MandlebrotSet( 256 ); //1024 );
+	Fractal* p_fractal = ( Fractal* ) new SierpinskiCarpet( 4, 1 );
+	
 	//ColorMap* p_colorMap = ( ColorMap* ) new GrayscaleLinear();
 	//ColorMap* p_colorMap = ( ColorMap* ) new GrayscaleLog();
 	ColorMap* p_colorMap = ( ColorMap* ) new YahooColorMap();
 
 
 
-
+	
 	Plot plot( p_fractal, p_colorMap );
-	plot.m_range.xStart = -2.5;
-	plot.m_range.xEnd = 0.8;
-	plot.m_range.yStart = -1.2;
-	plot.m_range.yEnd = 1.2;
+	p_fractal->SetInitialPlotRange( plot.m_range );
+
 
 	
 	

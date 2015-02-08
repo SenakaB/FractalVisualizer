@@ -7,7 +7,7 @@
 
 
 
-#include "../../include/Fractals/Mandlebrot.hpp"
+#include "../../include/Fractals/MandlebrotSet.hpp"
 
 
 
@@ -32,6 +32,36 @@ MandlebrotSet::Eval ( double x, double y )
 	else
 		retVal = ( ( double )( iters ) ) / m_maxIters;
 	return retVal;
+}
+
+
+
+void
+MandlebrotSet::IncrementDetailLevel ()
+{
+	m_maxIters *= 2;
+	return;
+}
+
+
+
+void
+MandlebrotSet::DecrementDetailLevel ()
+{
+	m_maxIters /= 2;
+	return;
+}
+
+
+
+void
+MandlebrotSet::SetInitialPlotRange ( PlotRange& range )
+{
+	range.xStart = -2.5;
+	range.xEnd = 0.8;
+	range.yStart = -1.2;
+	range.yEnd = 1.2;
+	return;
 }
 
 

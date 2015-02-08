@@ -68,3 +68,38 @@ Plot::SetPixel ( Mat& frame, const Point& pt, const Scalar bgr )
 }
 
 
+
+
+void
+Plot::ZoomIn ( double y, double x, double magnification )
+{
+	double xRange = ( m_range.xEnd - m_range.xStart ) / magnification;
+	double yRange = ( m_range.yEnd - m_range.yStart ) / magnification;
+	m_range.xStart = x - xRange / 2;  
+	m_range.xEnd = x + xRange / 2;
+	m_range.yStart = y - yRange / 2;  
+	m_range.yEnd = y + yRange / 2;  
+
+	for( int mag = ( int ) magnification; mag > 0; mag /= 4 )
+		mp_fractal->IncrementDetailLevel();
+	return;
+}
+
+
+
+
+void
+Plot::ZoomOut ( double demagnification )
+{
+	double xRange = ( m_range.xEnd - m_range.xStart ) * demagnification;
+	double yRange = ( m_range.yEnd - m_range.yStart ) * demagnification;
+	m_range.xStart = ( ( m_range.xEnd + m_range.xStart ) / 2 ) - ( xRange / 2 );
+	m_range.xEnd = ( ( m_range.xEnd + m_range.xStart ) / 2 ) + ( xRange / 2 );
+	m_range.yStart = ( ( m_range.yEnd + m_range.yStart ) / 2 ) - ( yRange / 2 );
+	m_range.yEnd = ( ( m_range.yEnd + m_range.yStart ) / 2 ) + ( yRange / 2 );
+	
+	for( int mag = ( int ) demagnification; mag > 0; mag /= 4 )
+		mp_fractal->DecrementDetailLevel();
+	return;
+}
+

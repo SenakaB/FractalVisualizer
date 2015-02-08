@@ -25,6 +25,12 @@ class MandlebrotSet : Fractal
 
 		double Eval ( double x, double y );
 
+		void IncrementDetailLevel ();
+		void DecrementDetailLevel ();
+
+		void SetInitialPlotRange ( PlotRange& range );
+
+
 
 	private :
 		int m_maxIters;
