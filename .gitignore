@@ -1,0 +1,7 @@
+# exclude binaries
+/bin/*
+# exclude object files
+/obj/*
+# exclude output files
+/output/*
+
