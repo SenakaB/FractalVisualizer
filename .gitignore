@@ -1,7 +1,9 @@
 # exclude binaries
 bin/*
+!bin
 # exclude object files
 obj/*
+!obj
 # exclude output files
 output/*
-
+!output
