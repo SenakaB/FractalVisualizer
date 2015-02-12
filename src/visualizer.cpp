@@ -16,7 +16,9 @@
 
 #include "../include/fractal.hpp"
 #include "../include/Fractals/MandlebrotSet.hpp"
+#include "../include/Fractals/burningShip.hpp"
 #include "../include/Fractals/SierpinskiCarpet.hpp"
+#include "../include/Fractals/BarnsleyFern.hpp"
 
 #include "../include/colorMap.hpp"
 #include "../include/ColorMaps/grayscaleLinear.hpp"
@@ -86,7 +88,9 @@ void FracVizMouseClickCallbackFunc ( int event, int x, int y, int flags, void* p
 int main ( int argc, char** argv )
 {
 	//Fractal* p_fractal = ( Fractal* ) new MandlebrotSet( 256 ); //1024 );
-	Fractal* p_fractal = ( Fractal* ) new SierpinskiCarpet( 4, 1 );
+	//Fractal* p_fractal = ( Fractal* ) new BurningShip( 256 );
+	//Fractal* p_fractal = ( Fractal* ) new SierpinskiCarpet( 4, 1 );
+	Fractal* p_fractal = ( Fractal* ) new BarnsleyFern( 4, 10000, true );
 	
 	//ColorMap* p_colorMap = ( ColorMap* ) new GrayscaleLinear();
 	//ColorMap* p_colorMap = ( ColorMap* ) new GrayscaleLog();

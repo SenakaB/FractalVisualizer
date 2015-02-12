@@ -1,12 +1,14 @@
 
-CXXFLAGS=-O3 -m64
+CXXFLAGS=-O3 -m64 -std=c++11
 
 COLORMAPS=grayscaleLinear grayscaleLogarithmic YahooColorMap
-FRACTALS=MandlebrotSet SierpinskiCarpet
+FRACTALS=MandlebrotSet SierpinskiCarpet burningShip BarnsleyFern
 
 # Command to print a variable
 #Test=$(COLORMAPS:%=./obj/ColorMap/%.o)
 #$(info $$Test is [${Test}])
+
+.SECONDEXPANSION:
 
 ./bin/FractalVisualizer: ./obj/visualizer.o ./obj/colorMap.o ./obj/plot.o $(COLORMAPS:%=./obj/ColorMaps/%.o) $(FRACTALS:%=./obj/Fractals/%.o)
 	g++ $(CXXFLAGS) -o ./bin/FractalVisualizer ./obj/visualizer.o ./obj/plot.o ./obj/colorMap.o $(COLORMAPS:%=./obj/ColorMaps/%.o) $(FRACTALS:%=./obj/Fractals/%.o) -I/usr/local/include/ -L/usr/local/lib/ -lopencv_highgui -lopencv_core
@@ -22,7 +24,6 @@ $(COLORMAPS:%=./obj/ColorMaps/%.o): $(subst obj,src,${@:.o=.cpp}) $(subst obj,in
 
 $(FRACTALS:%=./obj/Fractals/%.o): $(subst obj,src,${@:.o=.cpp}) $(subst obj,include,${@:.o=.hpp}) ./include/fractal.hpp
 	g++ $(CXXFLAGS) -c -o $@ $(subst obj,src,${@:.o=.cpp})
-
 
 
 ./obj/plot.o: ./src/plot.cpp ./include/plot.hpp ./include/plotRange.hpp
